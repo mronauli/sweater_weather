@@ -11,5 +11,6 @@ class CurrentWeather
     @high = data[:daily][0][:temp][:max]
     @low = data[:daily][0][:temp][:min]
     @hourly_weather = data[:hourly][0,8].map {|hour| HourlyWeather.new(hour)}
+    @daily_weather = data[:daily][0,7].map { |day| DailyWeather.new(day) }
   end
 end
