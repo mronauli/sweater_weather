@@ -1,13 +1,7 @@
 class Api::V1::ForecastsController < ApplicationController
   def show
-    conn = Faraday.new("https://maps.googleapis.com") do |req|
-      req.params["key"] = ENV["GOOGLE_API_KEY"]
-      req.params["address"] = params["location"]
-    end
-    response = conn.get("/maps/api/geocode/json")
-    geocode_data = JSON.parse(response.body, symbolize_names: true)
+    geocode_data = GeocodeService.new.get_data(params["location"])
     filtered_data = Geocode.new(geocode_data)
-
     conn = Faraday.new("https://api.openweathermap.org") do |req|
       req.params["appid"] = ENV["WEATHER_API"]
       req.params["units"] = "imperial"
