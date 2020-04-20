@@ -7,6 +7,10 @@ describe "as a user" do
       get "/api/v1/antipode?location=argentina"
 
       expect(response).to be_successful
+
+      antipode_weather_data = JSON.parse(response.body)
+      expect(antipode_weather_data["data"]["attributes"]["search_location"]).to include("argentina")
+      expect(antipode_weather_data["data"]["attributes"]["city_name"]).to_not be_empty
     end
   end
 end
