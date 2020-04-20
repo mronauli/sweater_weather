@@ -7,6 +7,6 @@ class Api::V1::BackgroundsController < ApplicationController
     end
     response = conn.get("/v1/search")
     background_data = JSON.parse(response.body, symbolize_names: true)
-    image_url = background_data[:photos][0][:src][:landscape]
+    image_url = Background.new(background_data)
   end
 end
