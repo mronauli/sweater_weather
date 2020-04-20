@@ -1,12 +1,11 @@
 class Api::V1::AntipodesController < ApplicationController
   def show
     data = GeocodeService.new.get_data_via_location(params["location"])
-    lat = data[:results][0][:geometry][:location][:lat]
-    long = data[:results][0][:geometry][:location][:lng]
+    geocode = Geocode.new(data)
     conn = Faraday.new("http://amypode.herokuapp.com") do |req|
       req.headers["api_key"] = ENV["AMY_API"]
-      req.params["lat"] = lat
-      req.params["long"] = long
+      req.params["lat"] = geodode.lat
+      req.params["long"] = geocode.long
     end
     response = conn.get("/api/v1/antipodes")
     antipode_data = JSON.parse(response.body, symbolize_names: true)
