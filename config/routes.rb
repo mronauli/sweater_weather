@@ -4,6 +4,7 @@ Rails.application.routes.draw do
       get "/forecast", to: "forecasts#show"
       get "/backgrounds", to: "backgrounds#show"
       get "/antipode", to: "antipodes#show"
+      post "/users", to: "users#create"
     end
   end
 end
