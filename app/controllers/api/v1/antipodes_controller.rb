@@ -13,5 +13,10 @@ class Api::V1::AntipodesController < ApplicationController
     latt = antipode_data[:data][:attributes][:lat]
     longg = antipode_data[:data][:attributes][:long]
     anti_pode_location_data = GeocodeService.new.get_data_via_latlong(latt, longg)
+    city_name = anti_pode_location_data[:results][3][:formatted_address]
+    data = WeatherService.new.get_data_via_latlong(latt, longg)
+    summary = data[:current][:weather][0][:description]
+    temp = data[:current][:temp]
+
   end
 end
