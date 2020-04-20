@@ -1,14 +1,26 @@
 class AntipodeFacade
-  attr_reader :data, :lat, :long, :antipode_data, :antipode, :anti_pode_location_data, :city_name, :weather_data
+  attr_reader :antipode, :city_name, :location, :geocode
   def initialize(location)
-    @data = GeocodeService.new.get_data_via_location(location)
-    @lat = data[:results][0][:geometry][:location][:lat]
-    @long = data[:results][0][:geometry][:location][:lng]
-    @antipode_data = AntipodeService.new.get_data(lat, long)
+    @location = location
+    @geocode = GeocodeAntipode.new(geocode_via_location)
     @antipode = Antipode.new(antipode_data)
-    @anti_pode_location_data = GeocodeService.new.get_data_via_latlong(antipode.lat, antipode.long)
-    @city_name = anti_pode_location_data[:results][3][:formatted_address]
-    @weather_data = WeatherService.new.get_data_via_city(city_name)
-    @weather = AntipodeWeather.new(weather_data)
+    @city_name = geocode_via_latlong[:results][3][:formatted_address]
+    @weather = AntipodeWeather.new(antipode_weather_data)
+  end
+
+  def geocode_via_location
+    GeocodeService.new.get_data_via_location(location)
+  end
+
+  def antipode_data
+    AntipodeService.new.get_data(geocode.lat, geocode.long)
+  end
+
+  def geocode_via_latlong
+    GeocodeService.new.get_data_via_latlong(antipode.lat, antipode.long)
+  end
+
+  def antipode_weather_data
+    WeatherService.new.get_data_via_city(city_name)
   end
 end
