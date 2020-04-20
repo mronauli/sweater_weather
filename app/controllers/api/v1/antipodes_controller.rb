@@ -10,13 +10,12 @@ class Api::V1::AntipodesController < ApplicationController
     end
     response = conn.get("/api/v1/antipodes")
     antipode_data = JSON.parse(response.body, symbolize_names: true)
-    latt = antipode_data[:data][:attributes][:lat]
-    longg = antipode_data[:data][:attributes][:long]
-    anti_pode_location_data = GeocodeService.new.get_data_via_latlong(latt, longg)
+    antipode = Antipode.new(antipode_data)
+    anti_pode_location_data = GeocodeService.new.get_data_via_latlong(antipode.lat, antipode.long)
     city_name = anti_pode_location_data[:results][3][:formatted_address]
-    data = WeatherService.new.get_data_via_latlong(latt, longg)
-    summary = data[:current][:weather][0][:description]
-    temp = data[:current][:temp]
-
+    data = WeatherService.new.get_data_via_city(city_name)
+    summary = data[:weater][0][:main]
+    current_temperature = data[:main][:temp]
+    city_name = data[:name]
   end
 end
