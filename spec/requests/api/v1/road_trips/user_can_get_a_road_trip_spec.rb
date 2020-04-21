@@ -13,7 +13,8 @@ describe "as a registered user" do
 
       trip_data = JSON.parse(response.body, symbolize_names: true)
 
-      expect(trip_data[:data][:attributes][:travel_time]).to include("2 hours")
+      expect(trip_data[:data][:attributes][:travel_time]).to_not be_empty
+      expect(trip_data[:data][:attributes][:arrival_forecast]).to_not be_empty
     end
 
     it "can see trip data for specified locations if not authorized" do
