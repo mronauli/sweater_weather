@@ -1,14 +1,19 @@
 class RoadTripFacade
-  attr_reader :origin, :destination, :direction
+  attr_reader :origin, :destination, :direction, :id
   def initialize(origin, destination)
     @origin = origin
     @destination = destination
     @direction = Direction.new(direction_data)
+    @id = nil
+  end
+
+  def arrival_forecast
+    "#{temp_at_arrival.round}, #{description_at_arrival.titleize}"
   end
 
   def description_at_arrival
     if travel_hours > 60
-      weather_data[:hourly][formatted_travel_time.tr('^0-9', '').to_i - 1][:weather][0][:description]
+      weather_data[:hourly][travel_time.tr('^0-9', '').to_i - 1][:weather][0][:description]
     else
       weather_data[:hourly][0][:weather][0][:description]
     end
@@ -16,13 +21,13 @@ class RoadTripFacade
 
   def temp_at_arrival
     if travel_hours > 60
-      weather_data[:hourly][formatted_travel_time.tr('^0-9', '').to_i - 1][:temp]
+      weather_data[:hourly][travel_time.tr('^0-9', '').to_i - 1][:temp]
     else
       weather_data[:hourly][0][:temp]
     end
   end
 
-  def formatted_travel_time
+  def travel_time
     "#{travel_hours / 60}" "#{' hours'}" if travel_hours > 60
   end
 
