@@ -7,6 +7,9 @@ describe "as a user" do
       get "/api/v1/backgrounds?location=denver,co"
 
       expect(response).to be_successful
+      background_data = JSON.parse(response.body, symbolize_names: true)
+      expect(background_data[:data][:attributes][:location]).to include("denver")
+      expect(background_data[:data][:attributes][:image_url]).to_not be_empty
     end
   end
 end
