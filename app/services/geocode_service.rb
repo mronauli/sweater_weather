@@ -12,6 +12,14 @@ class GeocodeService
      JSON.parse(response.body, symbolize_names: true)
    end
 
+   def get_directions(origin, destination)
+     response = conn.get("/maps/api/directions/json") do |req|
+       req.params["origin"] = origin
+       req.params["destination"] = destination
+     end
+     JSON.parse(response.body, symbolize_names: true)
+   end
+
    private
 
      def conn
