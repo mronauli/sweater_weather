@@ -4,7 +4,7 @@ class RoadTripFacade
     @origin = origin
     @destination = destination
     @direction = Direction.new(direction_data)
-    if travel_hours > 60
+    if travel_minutes > 60
       @forecast = HourlyWeather.new(weather_data[:hourly][travel_time.tr('^0-9', '').to_i - 1])
     else
       @forecast = HourlyWeather.new(weather_data[:hourly][0])
@@ -17,10 +17,10 @@ class RoadTripFacade
   end
 
   def travel_time
-    "#{travel_hours / 60}" "#{' hours'}" if travel_hours > 60
+    "#{travel_minutes / 60}" "#{' hours'}" if travel_minutes > 60
   end
 
-  def travel_hours
+  def travel_minutes
     direction.travel_time.tr('^0-9', '').to_i
   end
 
