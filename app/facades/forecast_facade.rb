@@ -10,10 +10,10 @@ class ForecastFacade
   end
 
   def geocode_data
-    GeocodeService.new.get_data(location)
+    GeocodeService.new.get_data_via_location(location)
   end
 
   def weather_data
-    WeatherService.new.get_data(geocode.lat, geocode.long)
+    WeatherService.new.get_data_via_latlong(geocode.lat, geocode.long)
   end
 end
