@@ -1,5 +1,4 @@
 class Api::V1::RoadTripsController < ApplicationController
-
   def create
     user =  User.find_by_api_key(params[:api_key])
     if user
@@ -9,5 +8,4 @@ class Api::V1::RoadTripsController < ApplicationController
       render json: {status: 401, text: 'Unauthorized.'}
     end
   end
-
 end
