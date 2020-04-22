@@ -2,9 +2,9 @@ class RoadTripFacade
   attr_reader :origin, :end_location, :direction, :forecast, :id, :food, :restaurant
   def initialize(origin, destination, food = nil)
     @origin = origin
-    @end_location = destination.titleize
+    @end_location = destination.titleize.gsub(/,(?![ ])/, ', ')
     @direction = Direction.new(direction_data)
-    @forecast = hourly_forecast.description
+    @forecast = hourly_forecast.description.capitalize
     @id = nil
     @food = food
     @restaurant = Restaurant.new(restaurant_data)
