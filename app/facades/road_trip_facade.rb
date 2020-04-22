@@ -35,6 +35,6 @@ class RoadTripFacade
   end
 
   def restaurant_data
-    YelpService.new.get_data(food, destination, (Time.now + (direction.travel_time.tr('^0-9', '').to_i / 60).hours).to_i)
+    YelpService.new.get_data(food, destination, (Time.now + (travel_minutes / 60).hours).to_i)
   end
 end
