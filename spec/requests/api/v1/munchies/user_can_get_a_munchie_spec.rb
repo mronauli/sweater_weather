@@ -8,7 +8,6 @@ describe "as a user" do
       expect(response).to be_successful
 
       munchie_trip = JSON.parse(response.body, symbolize_names: true)
-      require "pry"; binding.pry
       expect(munchie_trip[:data][:type]).to eq("munchie")
       expect(munchie_trip[:data][:attributes][:end_location]).to_not be_empty
       expect(munchie_trip[:data][:attributes][:travel_time]).to_not be_empty
