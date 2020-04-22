@@ -11,6 +11,7 @@ class Api::V1::MunchiesController < ApplicationController
      end
      response = conn.get("/v3/businesses/search")
      restaurant_data = JSON.parse(response.body, symbolize_names: true)
-     require "pry"; binding.pry
+     restaurant_name = restaurant_data[:businesses][0][:name]
+     restaurant_address = restaurant_data[:businesses][0][:location][:display_address]
   end
 end
