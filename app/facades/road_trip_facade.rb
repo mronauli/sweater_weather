@@ -1,6 +1,6 @@
 class RoadTripFacade
-  attr_reader :origin, :destination, :direction, :forecast, :id
-  def initialize(origin, destination)
+  attr_reader :origin, :destination, :direction, :forecast, :id, :food
+  def initialize(origin, destination, food = nil)
     @origin = origin
     @destination = destination
     @direction = Direction.new(direction_data)
@@ -10,6 +10,7 @@ class RoadTripFacade
       @forecast = HourlyWeather.new(weather_data[:hourly][0])
     end
     @id = nil
+    @food = food
   end
 
   def arrival_forecast
