@@ -1,21 +1,15 @@
 class RoadTripFacade
-  attr_reader :origin, :end_location, :direction, :forecast, :id, :food, :restaurant
+  attr_reader :origin, :destination, :direction, :forecast, :id
   def initialize(origin, destination, food = nil)
     @origin = origin
-    @end_location = destination.titleize.gsub(/,(?![ ])/, ', ')
+    @destination = destination
     @direction = Direction.new(direction_data)
-    @forecast = hourly_forecast.description.capitalize
+    @forecast = hourly_forecast
     @id = nil
-    @food = food
-    @restaurant = Restaurant.new(restaurant_data)
   end
 
   def hourly_forecast
-    if travel_minutes > 60
-      HourlyWeather.new(weather_data[:hourly][travel_time.tr('^0-9', '').to_i])
-    else
-      HourlyWeather.new(weather_data[:hourly][0])
-    end
+    HourlyWeather.new(weather_data[:hourly][hours_traveled])
   end
 
   def arrival_forecast
@@ -23,26 +17,18 @@ class RoadTripFacade
   end
 
   def travel_time
-    "#{travel_minutes / 60}" "#{' hours'}" if travel_minutes > 60
+    hours_traveled > 1 ? "#{hours_traveled}" "#{' hours'}" : "#{hours_traveled}" "#{' hour'}"
   end
 
-  def travel_minutes
-    direction.travel_time.tr('^0-9', '').to_i
-  end
-
-  def unix_time
-    (Time.now + (travel_minutes / 60).hours).to_i
+  def hours_traveled
+    (direction.travel_time.tr('^0-9', '').to_i * 0.01).ceil
   end
 
   def direction_data
-    GeocodeService.new.get_directions(origin, end_location)
+    GeocodeService.new.get_directions(origin, destination)
   end
 
   def weather_data
     WeatherService.new.get_data_via_latlong(direction.lat, direction.long)
-  end
-
-  def restaurant_data
-    YelpService.new.get_data(food, end_location, unix_time)
   end
 end
