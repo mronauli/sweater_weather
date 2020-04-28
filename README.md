@@ -150,7 +150,7 @@ Sweater Weather is a [Turing](https://turing.io/) back end solo project that agg
         }
     }
 }
-
+```
 ### Backgrounds
 `GET /api/v1/backgrounds`
 | Params | Example |
