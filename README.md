@@ -203,7 +203,7 @@ Sweater Weather is a [Turing](https://turing.io/) back end solo project that agg
 ```JSON
 {
     "data": {
-        "id": "5",
+        "id": "3",
         "type": "users",
         "attributes": {
             "api_key": "a525d7d523f64af8b29b3139601bcd80"
