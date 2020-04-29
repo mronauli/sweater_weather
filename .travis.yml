@@ -3,6 +3,7 @@ rbenv:
   - 2.5.3
 services:
   - postgresql
+dist: trusty
 script:
   - bundle exec rails db:{create,migrate} RAILS_ENV=test
   - bundle exec rspec
