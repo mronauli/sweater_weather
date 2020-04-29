@@ -1,0 +1,18 @@
+language: ruby
+cache:
+- bundler
+before_script:
+- bundle exec rake db:create
+- bundle exec rake db:migrate
+- bundle exec rake assets:precompile
+deploy:
+  provider: heroku
+  api_key:
+    secure:  Ur1JWP6z0QTcsUbI9Ioe6/pn0PM7zaXKbCya28xBJQgh39GhfninpFJaeuRp6tDlqGPHBNxdg+cIuGyZYcO5xF7KAuDeKET0Nx7SIo8kKsLDc56p7DEdsiKMuI2s2+1X3D2H
+f8jJwUmEKXIsQKdSURew7OtF8Bx/4nl5Rv3xiCZNSdQHUtvbdScusKTzULfAjG1fXzG2k743nqz1duaZNXoYqBw5IMMdo1NN4u5S7vJC4ryNSTDbGD2KDRjf7Gb7x//48a6D81YVw9FAQr0
+cWLdsyxd8y88hdZQSuTXcSzN65Xkj1pz0i4EEaYR6gGZctG+Rdz7H8aIfa2BRaDyuBStCqhCm8DBwS7Cbc44o4afL1XcsRNNYrNiHWQ8a10T+8U1LL1y7SRXBK75G/VVj19dgrjivGioHf3
+RxG4Qu10qWJFSLeOHKXVrJU08EtJQxS2sOhAurJSHfL26uu93l/jlphCMD8Hnk9+jAlaIv5zXAS6SDJTkA+CWe0EpyWrQrNT3nC7U6kTmWr7apYhgAmUhZONkSgGEHxJiJCn4qqDEGmgbd+
+iMkoK2fVAo1BHBU7BxeOrzLvH6aWCBvmAA8UuyywU0ZcOxBPjt9LP4sdzWs2nmR6n7UBlW1Rhh0NmceZXMPOfgMbm5h/KIIhTBWO+D2qbY9FCI4HTbavrpM4dQ=
+  app: sweater-weather-mr
+  on:
+    repo: mronauli/sweater_weather
